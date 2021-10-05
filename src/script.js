@@ -25,7 +25,8 @@ const scene = new THREE.Scene();
  */
 const textureLoader = new THREE.TextureLoader();
 const matcapTexture = textureLoader.load("/textures/matcaps/4.png");
-const matcapTexture2 = textureLoader.load("/textures/matcaps/6.png");
+const matcapTexture2 = textureLoader.load("/textures/matcaps/3.png");
+const matcapTexture3 = textureLoader.load("/textures/matcaps/8.png");
 
 const fontLoader = new THREE.FontLoader();
 fontLoader.load(
@@ -53,25 +54,36 @@ fontLoader.load(
     const textMaterial = new THREE.MeshMatcapMaterial({
       matcap: matcapTexture,
     });
-    const donutGeometry = new THREE.TorusBufferGeometry(0.3, 0.2, 20, 45);
+    const donutGeometry = new THREE.TorusBufferGeometry(0.3, 0.2, 15, 30);
+    const cubeGeometry = new THREE.BoxBufferGeometry(0.4, 0.4, 0.4);
     const material = new THREE.MeshMatcapMaterial({
       matcap: matcapTexture2,
     });
+    const material2 = new THREE.MeshMatcapMaterial({
+      matcap: matcapTexture3,
+    });
 
-    for (let i = 0; i < 260; i++) {
-      const donut = new THREE.Mesh(donutGeometry, material);
+    for (let i = 0; i < 100; i++) {
+      const donut = new THREE.Mesh(donutGeometry, material2);
+      const cube = new THREE.Mesh(cubeGeometry, material);
 
       donut.position.x = (Math.random() - 0.5) * 10;
       donut.position.y = (Math.random() - 0.5) * 10;
       donut.position.z = (Math.random() - 0.5) * 10;
+      cube.position.x = (Math.random() - 0.5) * 10;
+      cube.position.y = (Math.random() - 0.5) * 10;
+      cube.position.z = (Math.random() - 0.5) * 10;
 
       donut.rotation.x = Math.random() * Math.PI;
       donut.rotation.y = Math.random() * Math.PI;
+      // cube.rotation.x = Math.random() * Math.PI;
+      // cube.rotation.y = Math.random() * Math.PI;
 
       const scale = Math.random();
       donut.scale.set(scale, scale, scale);
+      cube.scale.set(scale, scale, scale);
 
-      scene.add(donut);
+      scene.add(donut, cube);
     }
     const text = new THREE.Mesh(textGeometry, textMaterial);
     scene.add(text);
